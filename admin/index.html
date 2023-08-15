@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../style/style.css">
+    <title>Blog Management system</title>
+</head>
+
+<body>
+    <div class="main_section">
+        <div class="row  container">
+            <div class="col-sm-4 mx-auto mt-4">
+                <div class="alert alert-primary">Login Form</div>
+
+                <form name="frm" onsubmit="login(event)">
+                    <div class="form-group">
+                        <label for="name">Enter name/email</label>
+                        <input required type="text" name="nm" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input required type="password" name="pwd" class="form-control">
+                    </div>
+                    <button type="submit" name="submit" class="btn btn-info"> Login </button>
+
+                    <a class="btn btn-dark" href="../index.html">Home page</a>
+            </div>
+            </form>
+        </div>
+    </div>
+    </div>
+</body>
+<script>
+    function login(event) {
+        event.preventDefault();
+        let unm = frm.nm.value
+        let pass = frm.pwd.value
+        let data = localStorage.getItem("trailblog")
+        let arr = JSON.parse(data)
+        let newarr = arr.filter((iteams, index) => {
+            return ((iteams.name == unm || iteams.email == unm) && (iteams.pwd == pass))
+        })
+        console.log(newarr)
+        if (newarr.length > 0) {
+            console.log("sknd")
+            alert("login successfully")
+            window.location = "admin_deshboard.html"
+        }
+        else {
+            alert("invaild user")
+            window.location = "index.html"
+        }
+        // newarr ? window.location = "admin_deshboard.html" :  window.location = "index.html" 
+
+
+    }
+</script>
+
+</html>

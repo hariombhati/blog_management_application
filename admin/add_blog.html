@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../style/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="index.html">Admin Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="admin_deshboard.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="add_blog.html">Add Blog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="manage.html">Manage Blog</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="main_section">
+        <div class=" container">
+
+            <div class="alert alert-info">
+                ADD Blog
+            </div>
+            <form action="" method="get" name="frm" id="frm" onsubmit="blog(event)">
+                <div class="form-group">
+                    <label for="">Catagory</label>
+                    <select name="catagory" id="cat" class="form-control">
+                        <option value="">Select catagory</option>
+                        <option value="nature">Nature</option>
+                        <option value="lifestyle">Lifestyle</option>
+                        <option value="sports">Sports</option>
+                        <option value="food">Food</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="">Title</label>
+                    <input type="text" name="title" id="title" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="">Description</label>
+                    <input type="text" name="description" id="dis" class="form-control">
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Add Blog</button>
+                    <button type="reset" class="btn btn-danger">Reset</button>
+                </div>
+            </form>
+            <button type="button" onclick="updatadata()" id="updatadisplay" style="display: none;"
+                class="btn btn-danger">update</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>\
+    <script>
+
+        function blog(event) {
+
+            event.preventDefault()
+            let dcatagory = frm.catagory.value
+            let dtitle = frm.title.value
+            let ddescription = frm.description.value
+            let data = localStorage.getItem("demodata")
+            if (data != null) {
+                arr = JSON.parse(data)
+
+            }
+            else {
+                arr = []
+            }
+            arr.push({ "catagory": dcatagory, "title": dtitle, "description": ddescription })
+            localStorage.setItem("demodata", JSON.stringify(arr))
+            alert("your blog is added SucessFully")
+            document.getElementById("frm").reset();
+
+
+        }
+
+        function editdata() {
+
+            let ind = localStorage.getItem('ind')
+             if(ind){
+                document.getElementById("updatadisplay").style.display = "block"
+             }
+            let data = localStorage.getItem("demodata")
+            if (data != null) {
+                arr = JSON.parse(data)
+            }
+            else {
+                arr = []
+            }
+
+            let newarr = arr.filter((iteams, index) => {
+                return ind == index
+
+            })
+            // console.log(newarr[0].title)
+            //    set data to the form
+            frm.catagory.value = newarr[0].catagory
+            frm.title.value = newarr[0].title
+            frm.description.value = newarr[0].description
+
+
+        }
+        editdata()
+        function updatadata() {
+            let ind = localStorage.getItem('ind')
+            let dcatagory = document.getElementById("cat").value
+            let dtitle = document.getElementById("title").value
+            let ddescription = document.getElementById("dis").value
+
+            let data = localStorage.getItem("demodata")
+            if (data != null) {
+                arr = JSON.parse(data)
+            }
+            else {
+                arr = []
+            }
+
+            arr[ind].catagory = dcatagory
+            arr[ind].title = dtitle
+            arr[ind].description = ddescription
+
+            console.log(arr)
+            localStorage.setItem("demodata", JSON.stringify(arr))
+
+            localStorage.removeItem('ind')
+
+            window.location = "manage.html"
+
+
+        }
+
+
+    </script>
+</body>
+
+</html>
